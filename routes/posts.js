@@ -8,7 +8,7 @@ router.get('/', function(req, res) {
   async.series([
     function(cb) {
       cosmic.getObjectType(req.app.locals.config, { type_slug: 'posts' }, function(err, response) {
-        (req.session.user) ? res.locals.posts = response.objects.all : _.filter(res.locals.all_posts, function(post) {
+        (req.session.user) ? res.locals.posts = response.objects.all : res.locals.posts = _.filter(response.objects.all, function(post) {
           return !post.metadata.premium
         })
         cb()

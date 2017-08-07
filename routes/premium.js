@@ -20,7 +20,9 @@ router.get('/', function(req, res) {
         if (req.session.user) res.locals.logged_in = true
         if (!req.session.user) {
           res.locals.error = "Create an account to view premium content"
-          res.locals.posts = res.locals.all_posts
+          res.locals.posts = _.filter(res.locals.all_posts, function(post) {
+            return !post.metadata.premium
+          })
           return res.render('posts.handlebars')
         }
         res.locals.posts = _.filter(res.locals.all_posts, function(post) {
