@@ -1,0 +1,24 @@
+{{> header}}
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-4">
+      <h1>Log In</h1>
+      <p class="text-muted">
+        Log in to view premium content.
+      </p>
+
+      <form method="post">
+        <input class="form-control" type="email" name="email" placeholder="Email" required/>
+        <input type="password" class="form-control" name="password" placeholder="Password" required />
+        <button class="btn btn-lg btn-primary btn-block submit-btn" type="submit">Log in</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+  form > input, button {
+    margin-top: 12px;
+  }
+</style>

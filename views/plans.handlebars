@@ -1,0 +1,114 @@
+{{> header}}
+
+<div class="container">
+  <div class="row text-center lead">
+    <h1>Choose a Plan to Read Premium Content</h1>
+    <p>
+      Sign up to view Premium Content on {{config.site_title}}
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <h3 class="text-center text-muted">
+        Monthly
+      </h3>
+      <p class="text-center">
+        <strong>Billed every month</strong>
+      </p>
+      <h1 class="text-center text-success">{{subscriptions.monthly_price}}</h1 class="text-center text-success">
+      <ul class="list-unstyled lead" style="padding: 0 20px">
+        <li>
+          <span class="glyphicon glyphicon-ok text-success"></span>Here's a good benefit
+        </li>
+        <li>
+          <span class="glyphicon glyphicon-ok text-success"></span>A reason to buy
+        </li>
+        <li>
+          <span class="glyphicon glyphicon-ok text-success"></span>Why you have to have it
+        </li>
+        <li>
+          <span class="glyphicon glyphicon-ok text-success"></span>Why you shouldn't miss out
+        </li>
+        <li>
+          <span class="glyphicon glyphicon-ok text-success"></span>Believe it.
+        </li>
+      </ul>
+      <a href="/signup?plan=monthly"><button class="btn btn-block btn-default btn-lg">Sign Up</button></a>
+    </div>
+    <div class="col-sm-4" style="border: 2px solid #3c763d">
+      <h3 style="background: #3c763d;color: white;padding: 7px 0" class="text-center text-success">
+        Yearly
+      </h3>
+      <p class="text-center">
+        <strong>Billed every 12 months</strong>
+      </p>
+      <h1 class="text-center text-success">{{subscriptions.yearly_price}}</h1>
+        <ul class="list-unstyled lead" style="padding: 0 20px">
+          <li>
+            <span class="glyphicon glyphicon-ok text-success"></span>Here's a good benefit
+          </li>
+          <li>
+            <span class="glyphicon glyphicon-ok text-success"></span>A reason to buy
+          </li>
+          <li>
+            <span class="glyphicon glyphicon-ok text-success"></span>Why you have to have it
+          </li>
+          <li>
+            <span class="glyphicon glyphicon-ok text-success"></span>Why you shouldn't miss out
+          </li>
+          <li>
+            <span class="glyphicon glyphicon-ok text-success"></span>Believe it.
+          </li>
+        </ul>
+        <a href="/signup?plan=yearly"><button class="btn btn-block btn-default btn-lg">Sign Up</button></a>
+    </div>
+    <div class="col-sm-4">
+      <h3 class="text-center text-muted">
+        Quarterly
+      </h3>
+      <p class="text-center">
+        <strong>Billed every 3 months</strong>
+      </p>
+      <h1 class="text-center text-success">{{subscriptions.quarterly_price}}</h1 class="text-center text-success">
+        <ul class="list-unstyled lead" style="padding: 0 30px">
+          <li>
+            <span class="glyphicon glyphicon-ok text-success"></span>Here's a good benefit
+          </li>
+          <li>
+            <span class="glyphicon glyphicon-ok text-success"></span>A reason to buy
+          </li>
+          <li>
+            <span class="glyphicon glyphicon-ok text-success"></span>Why you have to have it
+          </li>
+          <li>
+            <span class="glyphicon glyphicon-ok text-success"></span>Why you shouldn't miss out
+          </li>
+          <li>
+            <span class="glyphicon glyphicon-ok text-success"></span>Believe it.
+          </li>
+        </ul>
+        <a href="/signup?plan=quarterly"><button class="btn btn-block btn-default btn-lg">Sign Up</button></a>
+    </div>
+  </div>
+</div>
+
+
+
+<style>
+  form > input, button {
+    margin-top: 12px;
+  }
+  ul.lead {
+    margin-top: 40px
+  }
+  .lead > li {
+    margin: 8px 0
+  }
+  .glyphicon {
+    margin-right: 12px
+  }
+  .btn {
+    margin: 35px 0px;
+  }
+</style>

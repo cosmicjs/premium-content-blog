@@ -1,0 +1,29 @@
+{{> header}}
+{{#if not_found}}
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-xs12 col-md-6 col-md-offset-3">
+        <div class="alert alert-danger">
+          Post Not Found!
+        </div>
+        <a href="/posts">See All Posts</a>
+      </div>
+    </div>
+  </div>
+{{/if}}
+
+{{#each post}}
+  <article class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+        <h1>{{this.title}}</h1>
+        <div class="lead" style="font-size: 1.5em">
+          {{{this.content}}}
+        </div>
+        <em class="pull-right">
+          <time>{{date this.created_at}}</time>
+        </em>
+      </div>
+    </div>
+  </article>
+{{/each}}

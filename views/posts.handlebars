@@ -1,0 +1,13 @@
+{{> header}}
+<div class="container">
+  <div class="row">
+    {{#if error}}
+      <div class="alert alert-danger" role="alert">
+        {{error}}
+      </div>
+    {{/if}}
+    {{#each posts}}
+      {{> post-container this}}
+    {{/each}}
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div style="border-bottom: 3px solid #337ab7" class="col-xs-12 col-md-8 col-md-offset-2">
+  <h2>
+    {{#if this.metadata.premium}}
+      <span style="font-size: 0.5em" class="glyphicon glyphicon-star"></span>
+    {{/if}}
+    <a href="/post/{{this.slug}}">{{this.title}}</a>
+  </h2>
+  <p style="margin: 35px 40px">
+    {{truncateText this.content 20}} <a href="/post/{{this.slug}}">Read more</a>
+  </p>
+  <em style="margin: 20px 0" class="pull-right">
+    {{date this.created_at}}
+  </em>
+</div>

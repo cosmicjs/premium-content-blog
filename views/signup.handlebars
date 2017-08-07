@@ -1,0 +1,101 @@
+{{>header}}
+
+<div class="container">
+  <div class="row">
+    <form method="post" id="payment-form">
+      <div class="col-xs-12 text-center">
+        <h4 class="lead"><em>You're one step away from a <u>{{planName}}</u> subscription to {{config.site_title}}!</em></h4>
+      </div>
+    </div>
+    <div class="row"  style="margin-top: 30px">
+      <div class="col-md-8 col-md-offset-2">
+        <h4>Enter your account details and payment information</h4>
+
+        <label for="first_name">First name:</label>
+        <input type="text" name="first_name" class="form-control" placeholder="First name" required />
+        <label for="last_name">Last name:</label>
+        <input type="text" name="last_name" class="form-control" placeholder="Last name" required />
+        <label for="email">Email:</label>
+        <input type="email" name="email" class="form-control" placeholder="Email" required />
+        <label for="password">Password</label>
+        <input type="password" name="password" class="form-control" placeholder="Password" required />
+        <label for="card-element">Credit or debit card</label>
+        <div class="form-control" id="card-element"></div>
+        <div id="card-errors" role="alert"></div>
+        <button id="submit-button" class="btn-success btn btn-lg btn-block btn-default" >Submit Payment</button>
+
+      </div>
+    </div>
+    </form>
+</div>
+
+<script>
+  var stripe = Stripe('{{stripeKeyPublishable}}')
+  var elements = stripe.elements()
+  var card = elements.create('card')
+  var style = {
+      base: {
+        color: '#32325d',
+        lineHeight: '24px',
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontSmoothing: 'antialiased',
+        fontSize: '16px',
+        '::placeholder': {
+          color: '#aab7c4'
+        }
+      },
+      invalid: {
+        color: '#fa755a',
+        iconColor: '#fa755a'
+      }
+    };
+
+  card.mount('#card-element', {style: style})
+
+  // Handle real-time validation errors from the card Element.
+card.addEventListener('change', function(event) {
+  var displayError = document.getElementById('card-errors');
+  if (event.error) {
+    displayError.textContent = event.error.message;
+  } else {
+    displayError.textContent = '';
+  }
+});
+
+// Handle form submission
+var form = document.getElementById('payment-form');
+var submitButton = document.getElementById('submit-button');
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+  submitButton.disabled=true
+  stripe.createToken(card).then(function(result) {
+    if (result.error) {
+      // Inform the user if there was an error
+      var errorElement = document.getElementById('card-errors');
+      errorElement.textContent = result.error.message;
+      submitButton.disabled=false
+    } else {
+      // Send the token to your server
+      stripeTokenHandler(result.token);
+    }
+  });
+});
+
+function stripeTokenHandler(token) {
+  // Insert the token ID into the form so it gets submitted to the server
+  var form = document.getElementById('payment-form');
+  var hiddenInput = document.createElement('input');
+  hiddenInput.setAttribute('type', 'hidden');
+  hiddenInput.setAttribute('name', 'stripeToken');
+  hiddenInput.setAttribute('value', token.id);
+  form.appendChild(hiddenInput);
+  // Submit the form
+  form.submit();
+}
+</script>
+
+<style>
+  label,button {
+    margin-top: 22px;
+  }
+</style>
