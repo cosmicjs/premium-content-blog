@@ -1,38 +1,22 @@
-var webpack = require("webpack")
-var path = require("path")
-
-process.noDeprecation = true
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: './client/index.js',
   output: {
-    path: path.resolve(__dirname, "dist/assets"),
-    filename: "bundle.js",
-    sourceMapFilename: "bundle.map"
+    path: path.resolve('dist'),
+    filename: 'index_bundle.js'
   },
-  devtool: "#source-map",
   module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /(node_modules)/,
-        loader: "babel-loader",
-        query: {
-          presets: ["env", "stage-0", "react"]
-        }
-      }
+    loaders: [
+      { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ }
     ]
   },
   plugins: [
-    new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify("production")
-      }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      warnings: false,
-      mangle: false
+    new HtmlWebpackPlugin({
+      template: './client/index.html',
+      filename: 'index.html',
+      inject: 'body'
     })
   ]
 }
