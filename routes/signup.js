@@ -93,6 +93,12 @@ router.post('/', function(req, res) {
             key: 'stripe_id',
             type: 'text',
             value: charge.customer
+          },
+          {
+            title: 'Subscription Type',
+            key: 'subscription_type',
+            type: 'text',
+            value: req.query.plan
           }
         ]
       }

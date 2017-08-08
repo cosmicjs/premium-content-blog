@@ -1,4 +1,5 @@
 import { Component } from 'react'
+import cosmic from 'cosmicjs'
 
 export default class App extends Component {
 
@@ -6,7 +7,6 @@ export default class App extends Component {
     super(props)
     this.state = {
       cosmic: this.props.cosmic,
-      stripe: Stripe(this.props.stripeKey),
       loading: true
     }
     this.getRevenue = this.getRevenue.bind(this)
@@ -14,26 +14,19 @@ export default class App extends Component {
 
   componentWillMount() {
     this.state.revenue = this.getRevenue(this.state.stripe)
-    console.log(this.state.revenue)
+  }
+
+  compontentDidMount() {
     this.state.loading = false
   }
 
-  getRevenue(stripe) {
-    stripe.charges.list((err, charges) => {
-      let amounts = charges.data.map((charge) => {
-        return charge.amount
-      })
-      return amounts.reduce((sum, val) => {
-        return sum + value
-      })
-    })
+  getRevenue(readKey) {
+
   }
 
   render() {
     return (
-      this.state.loading ?
-        "Loading..." :
-        "Loaded."
+      <div>{this.loading ? "Loading..." : "Loaded."}</div>
     )
   }
 }

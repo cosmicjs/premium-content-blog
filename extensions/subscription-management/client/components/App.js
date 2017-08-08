@@ -8,7 +8,6 @@ export default class App extends Component {
     super(props)
     this.state = {
       cosmic: this.props.cosmic,
-      stripeKey: this.props.stripeKey
     }
   }
 
@@ -16,11 +15,9 @@ export default class App extends Component {
     return (
       <div>
         <Header
-          bucket={this.state.cosmic.bucket}
-          stripeKey={this.state.stripeKey}/>
+          bucket={this.state.cosmic.bucket} />
         <SubscriberContainer
-          cosmic={this.state.cosmic}
-          stripeKey={this.state.stripeKey} />
+          cosmic={this.state.cosmic} />
       </div>
     )
   }

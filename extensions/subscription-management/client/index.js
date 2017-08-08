@@ -10,8 +10,7 @@ const cosmic = {
   read_key: "eYK8D3LA3oKohk0tXu3WXSdiUaMEwGPKBsPKX5uUibZtdkItb1"
 }
 
-const stripeKey = "pk_test_2hciYwKwxCYy6nTEnKvfxdVa"
 ReactDom.render(
-  <App cosmic={cosmic} stripeKey={stripeKey}/>,
+  <App cosmic={cosmic}/>,
   document.getElementById('root')
 )
