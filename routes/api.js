@@ -4,7 +4,7 @@ var cosmic = require('cosmicjs')
 var axios = require('axios')
 
 router.post('/', function(req, res) {
-  var stripe = require(req.app.locals.stripeKeySecret)
+  var stripe = require('stripe')(req.app.locals.stripeKeySecret)
   var endpointSecret = 'whsec_NEcZRxKQlHOQYgbuvWBoiX4UNhHADMXL'
   var sig = req.headers['stripe-signature']
   var event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret)

@@ -5,7 +5,7 @@ var router = express.Router()
 
 router.get('/', function(req, res) {
   req.session.destroy()
-  return res.redirect('/posts')
+  return res.redirect('/')
 });
 
 module.exports = router
