@@ -13,7 +13,7 @@ const formatter = new Intl.NumberFormat('en-US', {
 })
 
 export default class App extends Component {
-
+ 
   constructor(props) {
     super(props)
     this.state = {
@@ -37,7 +37,7 @@ export default class App extends Component {
 
   deleteUser(e, user_slug, stripe_id) {
     Cosmic.getObject(this.state.cosmic, { slug: 'site' }, (err, response) => {
-      axios.post(`http://${response.object.metadata.domain}/api?write_key=${this.state.cosmic.bucket.write_key}&query=deleteUser&customer=${stripe_id}`)
+      axios.post(`https://${response.object.metadata.domain}/api?write_key=${this.state.cosmic.bucket.write_key}&query=deleteUser&customer=${stripe_id}`)
         .then( (axResponse) => {
           Cosmic.deleteObject(this.state.cosmic, { write_key: this.state.cosmic.bucket.write_key, slug: user_slug }, (err, delResponse) => {
             console.log(delResponse)
@@ -62,7 +62,7 @@ export default class App extends Component {
         currentStats.revenue = 'Error'
         this.setState({ stats: currentStats })
       }
-      axios.get(`http://${response.object.metadata.domain}/api?read_key=${this.state.cosmic.bucket.read_key}&query=revenue`)
+      axios.get(`https://${response.object.metadata.domain}/api?read_key=${this.state.cosmic.bucket.read_key}&query=revenue`)
         .then(axResponse => {
           let currentStats = this.state.stats
           currentStats.revenue = formatter.format(axResponse.data.data/100.0)
@@ -96,7 +96,7 @@ export default class App extends Component {
         currentStats.cancellations = 'Error'
         this.setState({ stats: currentStats })
       }
-      axios.get(`http://${response.object.metadata.domain}/api?read_key=${this.state.cosmic.bucket.read_key}&query=cancellations`)
+      axios.get(`https://${response.object.metadata.domain}/api?read_key=${this.state.cosmic.bucket.read_key}&query=cancellations`)
         .then(axResponse => {
           let currentStats = this.state.stats
           currentStats.cancellations = axResponse.data.data

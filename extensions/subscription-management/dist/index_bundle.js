@@ -27590,8 +27590,8 @@ var url = _queryString2.default.parse(location.search);
 
 var cosmic = { bucket: {
     slug: url.bucket_slug,
-    write_key: url.read_key,
-    read_key: url.write_key
+    write_key: url.write_key,
+    read_key: url.read_key
   }
 };
 
@@ -40417,7 +40417,7 @@ var App = function (_Component) {
       var _this2 = this;
 
       _cosmicjs2.default.getObject(this.state.cosmic, { slug: 'site' }, function (err, response) {
-        _axios2.default.post('http://' + response.object.metadata.domain + '/api?write_key=' + _this2.state.cosmic.bucket.write_key + '&query=deleteUser&customer=' + stripe_id).then(function (axResponse) {
+        _axios2.default.post('https://' + response.object.metadata.domain + '/api?write_key=' + _this2.state.cosmic.bucket.write_key + '&query=deleteUser&customer=' + stripe_id).then(function (axResponse) {
           _cosmicjs2.default.deleteObject(_this2.state.cosmic, { write_key: _this2.state.cosmic.bucket.write_key, slug: user_slug }, function (err, delResponse) {
             console.log(delResponse);
             _this2.setState({ users: _lodash2.default.remove(_this2.state.users, function (user) {
@@ -40449,7 +40449,7 @@ var App = function (_Component) {
           currentStats.revenue = 'Error';
           _this4.setState({ stats: currentStats });
         }
-        _axios2.default.get('http://' + response.object.metadata.domain + '/api?read_key=' + _this4.state.cosmic.bucket.read_key + '&query=revenue').then(function (axResponse) {
+        _axios2.default.get('https://' + response.object.metadata.domain + '/api?read_key=' + _this4.state.cosmic.bucket.read_key + '&query=revenue').then(function (axResponse) {
           var currentStats = _this4.state.stats;
           currentStats.revenue = formatter.format(axResponse.data.data / 100.0);
           _this4.setState({ stats: currentStats });
@@ -40488,7 +40488,7 @@ var App = function (_Component) {
           currentStats.cancellations = 'Error';
           _this6.setState({ stats: currentStats });
         }
-        _axios2.default.get('http://' + response.object.metadata.domain + '/api?read_key=' + _this6.state.cosmic.bucket.read_key + '&query=cancellations').then(function (axResponse) {
+        _axios2.default.get('https://' + response.object.metadata.domain + '/api?read_key=' + _this6.state.cosmic.bucket.read_key + '&query=cancellations').then(function (axResponse) {
           var currentStats = _this6.state.stats;
           currentStats.cancellations = axResponse.data.data;
           _this6.setState({ stats: currentStats });

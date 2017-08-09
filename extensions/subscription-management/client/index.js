@@ -8,8 +8,8 @@ const url = QueryString.parse(location.search)
 
 const cosmic = { bucket: {
     slug: url.bucket_slug,
-    write_key: url.read_key,
-    read_key: url.write_key
+    write_key: url.write_key,
+    read_key: url.read_key
   }
 }
 
