@@ -6,9 +6,9 @@ var axios = require('axios')
 router.post('/', function(req, res) {
   var stripe = require(req.app.locals.stripeKeySecret)
   var endpointSecret = 'whsec_NEcZRxKQlHOQYgbuvWBoiX4UNhHADMXL'
+  var sig = req.headers['stripe-signature']
+  var event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret)
   switch (req.body.type) {
-    var sig = req.headers['stripe-signature']
-    var event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret)
     case 'charge.succeeded':
       cosmic.getObject(req.app.locals.config, { slug: 'subscriptions' }, function (err, response) {
         var currentObject = response.object
