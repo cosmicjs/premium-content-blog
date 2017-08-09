@@ -34,6 +34,7 @@ router.post('/', function(req, res) {
       })
     default:
       res.status(500).json({ error: 'Bad Request' })
+      break;
   }
 });
 
