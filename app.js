@@ -7,6 +7,7 @@ var exphbs  = require('express-handlebars');
 var session = require('express-session')
 var dateFormat = require('dateformat')
 var truncate = require('truncate-html')
+var cors = require('cors')
 
 var routes = require('./routes/index');
 var posts = require('./routes/posts');
@@ -41,6 +42,7 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: false }
 }))
+app.use(cors())
 
 // view engine setup
 

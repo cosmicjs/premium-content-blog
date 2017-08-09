@@ -15,6 +15,7 @@
     "async": "^2.5.0",
     "bcrypt": "^1.0.2",
     "body-parser": "^1.13.3",
+    "cors": "^2.8.4",
     "cosmicjs": "^2.39.91",
     "dateformat": "^2.0.0",
     "express": "^4.13.3",
