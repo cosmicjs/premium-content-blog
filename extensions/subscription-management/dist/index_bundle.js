@@ -27586,7 +27586,7 @@ var _queryString2 = _interopRequireDefault(_queryString);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 window.React = _react2.default;
-var url = queryString.parse(location.search);
+var url = _queryString2.default.parse(location.search);
 
 var cosmic = { bucket: {
     slug: url.bucket_slug,

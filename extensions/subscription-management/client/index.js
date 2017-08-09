@@ -4,7 +4,7 @@ import App from './components/App'
 import QueryString from 'query-string'
 
 window.React = React
-const url = queryString.parse(location.search)
+const url = QueryString.parse(location.search)
 
 const cosmic = { bucket: {
     slug: url.bucket_slug,
