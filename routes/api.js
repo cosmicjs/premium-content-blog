@@ -33,7 +33,7 @@ router.post('/', function(req, res) {
           })
         })
       })
-      res.status(200).json({ received: true)
+      res.status(200).json({ received: true})
     default:
       res.status(500).json({ error: 'Bad Request' })
       break;
