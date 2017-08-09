@@ -19,7 +19,7 @@ router.post('/', function(req, res) {
           data: currentObject
         })
       })
-      res.status(200).json({ received: true })
+      res.json({ received: true })
     break;
     case 'customer.subscription.deleted':
       cosmic.deleteObject(req.app.locals.config, { slug: 'user', write_key: req.app.locals.config.bucket.slug }, function (err, response) {
@@ -33,9 +33,9 @@ router.post('/', function(req, res) {
           })
         })
       })
-      res.status(200).json({ received: true})
+      res.json({ received: true})
     default:
-      res.status(500).json({ error: 'Bad Request' })
+      res.json({ received: false })
       break;
   }
 });
