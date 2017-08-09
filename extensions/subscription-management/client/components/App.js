@@ -9,13 +9,13 @@ export default class App extends Component {
     this.state = {
       cosmic: this.props.cosmic,
     }
-  }
+  } 
 
   render() {
     return (
       <div>
         <Header
-          bucket={this.state.cosmic.bucket} />
+          bucket={this.state.cosmic.bucket.slug} />
         <SubscriberContainer
           cosmic={this.state.cosmic} />
       </div>

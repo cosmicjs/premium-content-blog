@@ -1,13 +1,16 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 import App from './components/App'
+import QueryString from 'query-string'
 
 window.React = React
+const url = queryString.parse(location.search)
 
-const cosmic = {
-  bucket: "cosmicuserblogtest",
-  write_key: "v2N87o8VpE8onC9eqPFAg13uGSRBrRUrOQ50itoqiz7iwQ9EFf",
-  read_key: "eYK8D3LA3oKohk0tXu3WXSdiUaMEwGPKBsPKX5uUibZtdkItb1"
+const cosmic = { bucket: {
+    slug: url.bucket_slug,
+    write_key: url.read_key,
+    read_key: url.write_key
+  }
 }
 
 ReactDom.render(
