@@ -17,8 +17,9 @@ router.post('/', function(req, res) {
           method: 'put',
           url: `https://api.cosmicjs.com/v1/${req.app.locals.config.bucket.slug}/edit-object`,
           data: currentObject
-        }).then(res.status(200).json({ data: 'success' }))
+        })
       })
+      res.status(200).json({ received: true })
     break;
     case 'customer.subscription.deleted':
       cosmic.deleteObject(req.app.locals.config, { slug: 'user', write_key: req.app.locals.config.bucket.slug }, function (err, response) {
@@ -29,9 +30,10 @@ router.post('/', function(req, res) {
             method: 'put',
             url: `https://api.cosmicjs.com/v1/${req.app.locals.config.bucket.slug}/edit-object`,
             data: currentObject
-          }).then(res.status(200).json({ data: 'success' }))
+          })
         })
       })
+      res.status(200).json({ received: true)
     default:
       res.status(500).json({ error: 'Bad Request' })
       break;
