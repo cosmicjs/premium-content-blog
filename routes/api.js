@@ -4,7 +4,7 @@ var cosmic = require('cosmicjs')
 var axios = require('axios')
 
 router.post('/', function(req, res) {
-  var event = JSON.parse(req.body)
+  event = req.body
   switch (event.type) {
     case 'charge.succeeded':
       cosmic.getObject(req.app.locals.config, { slug: 'subscriptions' }, function (err, response) {
@@ -16,8 +16,7 @@ router.post('/', function(req, res) {
           data: currentObject
         })
       })
-      res.json({ received: true })
-    break;
+      return res.json({ received: true })
     case 'customer.subscription.deleted':
       cosmic.deleteObject(req.app.locals.config, { slug: 'user', write_key: req.app.locals.config.bucket.slug }, function (err, response) {
         cosmic.getObject(req.app.locals.config, { slug: 'subscriptions' }, function (err, response) {
@@ -30,10 +29,9 @@ router.post('/', function(req, res) {
           })
         })
       })
-      res.json({ received: true})
+      return res.json({ received: true})
     default:
-      res.json({ received: false })
-      break;
+      return res.json({ received: false })
   }
 });
 
