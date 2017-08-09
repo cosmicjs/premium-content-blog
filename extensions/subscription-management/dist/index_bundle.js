@@ -40399,10 +40399,8 @@ var App = function (_Component) {
       },
       users: [],
       fetchingRevenue: true,
-      fetchingUsers: true,
-      deletingUser: false
+      fetchingUsers: true
     };
-    _this.deleteUser = _this.deleteUser.bind(_this);
     return _this;
   }
 
@@ -40412,88 +40410,71 @@ var App = function (_Component) {
       this.getRevenue();this.getUsers();this.getCancellations();
     }
   }, {
-    key: 'deleteUser',
-    value: function deleteUser(e, user_slug, stripe_id) {
-      var _this2 = this;
-
-      _cosmicjs2.default.getObject(this.state.cosmic, { slug: 'site' }, function (err, response) {
-        _axios2.default.post('https://' + response.object.metadata.domain + '/api?write_key=' + _this2.state.cosmic.bucket.write_key + '&query=deleteUser&customer=' + stripe_id).then(function (axResponse) {
-          _cosmicjs2.default.deleteObject(_this2.state.cosmic, { write_key: _this2.state.cosmic.bucket.write_key, slug: user_slug }, function (err, delResponse) {
-            console.log(delResponse);
-            _this2.setState({ users: _lodash2.default.remove(_this2.state.users, function (user) {
-                return user.slug !== user_slug;
-              }) });
-          });
-        });
-      });
-    }
-  }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this3 = this;
+      var _this2 = this;
 
       this.fetchData();
       setInterval(function () {
-        _this3.fetchData();
+        _this2.fetchData();
       }, 60000);
     }
   }, {
     key: 'getRevenue',
     value: function getRevenue(cosmic) {
-      var _this4 = this;
+      var _this3 = this;
 
       this.setState({ fetchingRevenue: true });
-      _cosmicjs2.default.getObject(this.state.cosmic, { slug: 'site' }, function (err, response) {
+      _cosmicjs2.default.getObject(this.state.cosmic, { slug: 'subscriptions' }, function (err, response) {
         if (err) {
-          currentStats = _this4.state.stats;
-          currentStats.revenue = 'Error';
-          _this4.setState({ stats: currentStats });
+          currentStats = _this3.state.stats;
+          currentStats.users = 'Error';
+          _this3.setState({ stats: currentStats });
+        } else {
+          var _currentStats = _this3.state.stats;
+          _currentStats.revenue = isNaN(response.object.metadata.revenue) ? 0 : response.object.metadata.revenue;
+          _this3.setState({ stats: _currentStats });
+          _this3.setState({ fetchingRevenue: false });
         }
-        _axios2.default.get('https://' + response.object.metadata.domain + '/api?read_key=' + _this4.state.cosmic.bucket.read_key + '&query=revenue').then(function (axResponse) {
-          var currentStats = _this4.state.stats;
-          currentStats.revenue = formatter.format(axResponse.data.data / 100.0);
-          _this4.setState({ stats: currentStats });
-          _this4.setState({ fetchingRevenue: false });
-        });
       });
     }
   }, {
     key: 'getUsers',
     value: function getUsers(cosmic) {
-      var _this5 = this;
+      var _this4 = this;
 
       this.setState({ fetchingUsers: true });
       _cosmicjs2.default.getObjectType(this.state.cosmic, { type_slug: 'users' }, function (err, response) {
         if (err) {
-          currentStats = _this5.state.stats;
+          currentStats = _this4.state.stats;
           currentStats.users = 'Error';
-          _this5.setState({ stats: currentStats });
+          _this4.setState({ stats: currentStats });
+        } else {
+          var _currentStats2 = _this4.state.stats;
+          _currentStats2.users = isNaN(response.total) ? 0 : response.total;
+          _this4.setState({ stats: _currentStats2 });
+          _this4.setState({ users: response.objects.all });
+          _this4.setState({ fetchingUsers: false });
         }
-        var currentStats = _this5.state.stats;
-        currentStats.users = isNaN(response.total) ? 0 : response.total;
-        _this5.setState({ stats: currentStats });
-        _this5.setState({ users: response.objects.all });
-        _this5.setState({ fetchingUsers: false });
       });
     }
   }, {
     key: 'getCancellations',
     value: function getCancellations(cosmic) {
-      var _this6 = this;
+      var _this5 = this;
 
-      this.setState({ fetchingRevenue: true });
-      _cosmicjs2.default.getObject(this.state.cosmic, { slug: 'site' }, function (err, response) {
+      this.setState({ fetchingCancellations: true });
+      _cosmicjs2.default.getObject(this.state.cosmic, { slug: 'subscriptions' }, function (err, response) {
         if (err) {
-          currentStats = _this6.state.stats;
-          currentStats.cancellations = 'Error';
-          _this6.setState({ stats: currentStats });
+          currentStats = _this5.state.stats;
+          currentStats.users = 'Error';
+          _this5.setState({ stats: currentStats });
+        } else {
+          var _currentStats3 = _this5.state.stats;
+          _currentStats3.cancellations = isNaN(response.object.metadata.cancellations) ? 0 : response.object.metadata.cancellations;
+          _this5.setState({ stats: _currentStats3 });
+          _this5.setState({ fetchingCancellations: false });
         }
-        _axios2.default.get('https://' + response.object.metadata.domain + '/api?read_key=' + _this6.state.cosmic.bucket.read_key + '&query=cancellations').then(function (axResponse) {
-          var currentStats = _this6.state.stats;
-          currentStats.cancellations = axResponse.data.data;
-          _this6.setState({ stats: currentStats });
-          _this6.setState({ fetchingCancellations: false });
-        });
       });
     }
   }, {
@@ -40502,9 +40483,9 @@ var App = function (_Component) {
       return React.createElement(
         'div',
         { className: 'container' },
-        React.createElement(_Loader2.default, { loadingState: this.deletingUser || this.state.fetchingUsers || this.state.fetchingRevenue || this.state.fetchingCancellations }),
+        React.createElement(_Loader2.default, { loadingState: this.state.fetchingUsers || this.state.fetchingRevenue || this.state.fetchingCancellations }),
         React.createElement(_StatsContainer2.default, { stats: this.state.stats }),
-        React.createElement(_UserList2.default, { deleteUser: this.deleteUser, users: this.state.users })
+        React.createElement(_UserList2.default, { users: this.state.users })
       );
     }
   }]);
@@ -50541,11 +50522,6 @@ var UserList = function UserList(_ref) {
               "th",
               null,
               "Email"
-            ),
-            React.createElement(
-              "th",
-              null,
-              "Actions"
             )
           )
         ),
@@ -50575,17 +50551,6 @@ var UserList = function UserList(_ref) {
                 "td",
                 null,
                 user.metadata.email
-              ),
-              React.createElement(
-                "td",
-                null,
-                React.createElement(
-                  "button",
-                  { onClick: function onClick(e) {
-                      return deleteUser(e, user.slug, user.metadata.stripe_id);
-                    }, className: "btn btn-danger", id: user.slug },
-                  "Delete User"
-                )
               )
             );
           })

@@ -49,7 +49,7 @@ export default class App extends Component {
         this.setState({ stats: currentStats })
       } else {
         let currentStats = this.state.stats
-        currentStats.revenue = isNan(reponse.object.metadata.revenue) ? 0: reponse.object.metadata.revenue
+        currentStats.revenue = isNaN(response.object.metadata.revenue) ? 0: response.object.metadata.revenue
         this.setState({ stats: currentStats })
         this.setState({ fetchingRevenue: false })
       }
@@ -82,7 +82,7 @@ export default class App extends Component {
         this.setState({ stats: currentStats })
       } else {
         let currentStats = this.state.stats
-        currentStats.cancellations = isNan(reponse.object.metadata.cancellations) ? 0: reponse.object.metadata.cancellations
+        currentStats.cancellations = isNaN(response.object.metadata.cancellations) ? 0: response.object.metadata.cancellations
         this.setState({ stats: currentStats })
         this.setState({ fetchingCancellations: false })
       }
