@@ -26,25 +26,11 @@ export default class App extends Component {
       users: [],
       fetchingRevenue: true,
       fetchingUsers: true,
-      deletingUser: false,
     }
-    this.deleteUser = this.deleteUser.bind(this)
   }
 
   fetchData() {
     this.getRevenue();this.getUsers();this.getCancellations()
-  }
-
-  deleteUser(e, user_slug, stripe_id) {
-    Cosmic.getObject(this.state.cosmic, { slug: 'site' }, (err, response) => {
-      axios.post(`https://${response.object.metadata.domain}/api?write_key=${this.state.cosmic.bucket.write_key}&query=deleteUser&customer=${stripe_id}`)
-        .then( (axResponse) => {
-          Cosmic.deleteObject(this.state.cosmic, { write_key: this.state.cosmic.bucket.write_key, slug: user_slug }, (err, delResponse) => {
-            console.log(delResponse)
-            this.setState({ users: _.remove(this.state.users, user => user.slug !== user_slug)})
-          })
-        })
-    })
   }
 
   componentDidMount() {
@@ -56,19 +42,17 @@ export default class App extends Component {
 
   getRevenue(cosmic) {
     this.setState({ fetchingRevenue: true})
-    Cosmic.getObject(this.state.cosmic, { slug: 'site' }, (err, response) => {
+    Cosmic.getObject(this.state.cosmic, { slug: 'subscriptions' }, (err, response) => {
       if (err) {
         currentStats = this.state.stats
-        currentStats.revenue = 'Error'
+        currentStats.users = 'Error'
         this.setState({ stats: currentStats })
+      } else {
+        let currentStats = this.state.stats
+        currentStats.revenue = isNan(reponse.object.metadata.revenue) ? 0: reponse.object.metadata.revenue
+        this.setState({ stats: currentStats })
+        this.setState({ fetchingRevenue: false })
       }
-      axios.get(`https://${response.object.metadata.domain}/api?read_key=${this.state.cosmic.bucket.read_key}&query=revenue`)
-        .then(axResponse => {
-          let currentStats = this.state.stats
-          currentStats.revenue = formatter.format(axResponse.data.data/100.0)
-          this.setState({ stats: currentStats })
-          this.setState({ fetchingRevenue: false })
-        })
     })
   }
 
@@ -79,39 +63,38 @@ export default class App extends Component {
         currentStats = this.state.stats
         currentStats.users = 'Error'
         this.setState({ stats: currentStats })
+      } else {
+        let currentStats = this.state.stats
+        currentStats.users = isNaN(response.total) ? 0 : response.total
+        this.setState({ stats: currentStats })
+        this.setState({ users: response.objects.all })
+        this.setState({ fetchingUsers: false })
       }
-      let currentStats = this.state.stats
-      currentStats.users = isNaN(response.total) ? 0 : response.total
-      this.setState({ stats: currentStats })
-      this.setState({ users: response.objects.all })
-      this.setState({ fetchingUsers: false })
     })
   }
 
   getCancellations(cosmic) {
-    this.setState({ fetchingRevenue: true})
-    Cosmic.getObject(this.state.cosmic, { slug: 'site' }, (err, response) => {
+    this.setState({ fetchingCancellations: true})
+    Cosmic.getObject(this.state.cosmic, { slug: 'subscriptions' }, (err, response) => {
       if (err) {
         currentStats = this.state.stats
-        currentStats.cancellations = 'Error'
+        currentStats.users = 'Error'
         this.setState({ stats: currentStats })
+      } else {
+        let currentStats = this.state.stats
+        currentStats.cancellations = isNan(reponse.object.metadata.cancellations) ? 0: reponse.object.metadata.cancellations
+        this.setState({ stats: currentStats })
+        this.setState({ fetchingCancellations: false })
       }
-      axios.get(`https://${response.object.metadata.domain}/api?read_key=${this.state.cosmic.bucket.read_key}&query=cancellations`)
-        .then(axResponse => {
-          let currentStats = this.state.stats
-          currentStats.cancellations = axResponse.data.data
-          this.setState({ stats: currentStats })
-          this.setState({ fetchingCancellations: false })
-        })
     })
   }
 
   render() {
     return (
       <div className="container">
-        <Loader loadingState={this.deletingUser || this.state.fetchingUsers || this.state.fetchingRevenue || this.state.fetchingCancellations} />
+        <Loader loadingState={this.state.fetchingUsers || this.state.fetchingRevenue || this.state.fetchingCancellations} />
         <StatsContainer stats={this.state.stats} />
-        <UserList deleteUser={this.deleteUser} users={this.state.users}/>
+        <UserList users={this.state.users}/>
       </div>
     )
   }

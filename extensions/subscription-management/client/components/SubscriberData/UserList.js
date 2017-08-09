@@ -9,7 +9,6 @@ const UserList = ({ users, deleteUser }) =>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
-            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -19,7 +18,6 @@ const UserList = ({ users, deleteUser }) =>
               <td>{user.metadata.first_name}</td>
               <td>{user.metadata.last_name}</td>
               <td>{user.metadata.email}</td>
-              <td><button onClick={(e) => deleteUser(e, user.slug, user.metadata.stripe_id)} className="btn btn-danger" id={user.slug}>Delete User</button></td>
             </tr>
           )}
         </tbody>
