@@ -18,6 +18,7 @@ router.get('/:slug', function(req, res) {
     function(cb) {
       cosmic.getObject(req.app.locals.config, { slug: 'site' }, function(err, response) {
         res.locals.config = response.object.metadata
+        res.locals.user = req.session.user
         return res.render('post.handlebars')
       })
     }
