@@ -29,7 +29,7 @@ router.post('/', function(req, res) {
         cosmic.getObject(req.app.locals.config, { slug: 'subscriptions' }, function (err, response) {
           var currentObject = response.object
           currentObject.metadata.cancellations = currentObject.metadata.cancellations + 1
-          currentObject.metafield.revenue.value = currentObject.metadata.cancellations + 1
+          currentObject.metafield.cancellations.value = currentObject.metadata.cancellations + 1
           currentObject.write_key = req.app.locals.config.bucket.write_key
           axios({
             method: 'put',
@@ -43,6 +43,7 @@ router.post('/', function(req, res) {
         })
       })
       return res.json({ received: true})
+      break;
     default:
       return res.json({ received: false })
   }

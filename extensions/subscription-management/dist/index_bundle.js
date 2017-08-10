@@ -40432,7 +40432,7 @@ var App = function (_Component) {
           _this3.setState({ stats: currentStats });
         } else {
           var _currentStats = _this3.state.stats;
-          _currentStats.revenue = isNaN(response.object.metadata.revenue) ? 0 : response.object.metadata.revenue;
+          _currentStats.revenue = isNaN(response.object.metadata.revenue) ? 0 : formatter.format(response.object.metadata.revenue / 100.0);
           _this3.setState({ stats: _currentStats });
           _this3.setState({ fetchingRevenue: false });
         }
