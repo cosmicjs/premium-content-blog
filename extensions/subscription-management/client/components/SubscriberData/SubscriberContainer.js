@@ -1,6 +1,6 @@
 import { Component } from 'react'
 import Cosmic from 'cosmicjs'
-import axios from 'axios'
+import async from 'async'
 import _ from 'lodash'
 import StatsContainer from './StatsContainer'
 import Loader from './Loader'
@@ -42,17 +42,26 @@ export default class App extends Component {
 
   getRevenue(cosmic) {
     this.setState({ fetchingRevenue: true})
-    Cosmic.getObject(this.state.cosmic, { slug: 'subscriptions' }, (err, response) => {
-      if (err) {
-        currentStats = this.state.stats
-        currentStats.users = 'Error'
-        this.setState({ stats: currentStats })
-      } else {
-        let currentStats = this.state.stats
-        currentStats.revenue = isNaN(response.object.metadata.revenue) ? 0: formatter.format(response.object.metadata.revenue / 100.0 )
-        this.setState({ stats: currentStats })
-        this.setState({ fetchingRevenue: false })
+    async.series([
+      callback => {
+        Cosmic.getObject(this.state.cosmic, { slug: 'subscriptions' }, (err, response) => {
+          callback(null, response.object)
+        })
+      },
+      callback => {
+        Cosmic.getObjectType(this.state.cosmic, { type_slug: 'users' }, (err, response) => {
+          callback(null, response.objects.all)
+        })
       }
+    ], (err, results) => {
+      let subscriptions = results[0], users = results[1];
+      let currentStats = this.state.stats
+      currentStats.revenue = formatter.format(users.map(user =>
+        parseInt(subscriptions.metadata[`${user.metadata.subscription_type}_price`].replace('$', ''))
+      )
+      .reduce((sum, val) => sum + val))
+      this.setState({ stats: currentStats })
+      this.setState({ fetchingRevenue: false })
     })
   }
 

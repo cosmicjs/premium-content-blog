@@ -7,9 +7,9 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      cosmic: this.props.cosmic,
+      cosmic: this.props.cosmic
     }
-  } 
+  }
 
   render() {
     return (
