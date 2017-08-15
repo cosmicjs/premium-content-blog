@@ -8,6 +8,11 @@
 ### Getting Started
 Start your blogging career with this app that allows you to charge users on a subscription basis, for your premium content.  Simply install the app, add your Stripe keys, then deploy to the Cosmic App Server (or your chosen hosting solution).  [Sign up for Cosmic JS](https://cosmicjs.com) to install and deploy this app in a few minutes.
 
+```
+git clone https://github.com/cosmicjs/premium-content-blog
+cd premium-content-blog
+npm install
+```
 Create a new file in `config/development.js` and add:
 ```
 module.exports = {
@@ -19,10 +24,8 @@ module.exports = {
 }
 
 ```
+Then 
 ```
-git clone https://github.com/cosmicjs/premium-content-blog
-cd premium-content-blog
-npm install
 NODE_ENV=development npm run dev
 ```
 
