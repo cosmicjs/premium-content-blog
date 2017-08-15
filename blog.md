@@ -1,11 +1,11 @@
-# How to Start Your Blogging Career With CosmicJS
+# How to Start Your Blogging Career With Cosmic JS
 You have great ideas. Your head is overflowing with content that you *know* people will pay to read. So where do you start? You're likely inclined to choose a trusted platform like Wordpress, but since you want to offer paid content to your users you now face the problem of making a cumbersome solution even more so.
 
 Instead of tweaking a platform to work with for us, we want a simple, straightforward solution with no more functionality than we need. This, of course, means we're going to build it ourselves.
 
-In the spirit of a simple, straight forward solution that works exactly the way we want it to, we'll be using CosmicJS to host our blog, manage it's users, and store it's content. 
+In the spirit of a simple, straight forward solution that works exactly the way we want it to, we'll be using Cosmic JS to host our blog, manage it's users, and store it's content. 
 
-Our project will be a play in two parts. First, we'll build our blog with Express and CosmicJS and use Stripe to handle the blog's payments and subcriptions. Then, we'll leverage CosmicJS's Extension feature to build a dashboard that gives us an overview of our business' backend.
+Our project will be a play in two parts. First, we'll build our blog with Express and Cosmic JS and use Stripe to handle the blog's payments and subcriptions. Then, we'll leverage Cosmic JS's Extension feature to build a dashboard that gives us an overview of our business' backend.
 
 # Part 1: Building the Blog
 
@@ -51,7 +51,7 @@ We'll be using the following packages:
 
 You could install these with npm, but I advocate for Yarn. It's significantly faster and we have no time to waste. So install Yarn (on macOS we'll do a ```brew install yarn```) then run ```yarn add async axios cors bcrypt cosmicjs expres-session dateformat stripe truncate-html``` . We're almost ready to start building.
 
-###3. Set Up CosmicJS
+###3. Set Up Cosmic JS
 Before we start building, we'll need to work out the schema for our Cosmic Bucket. We want to store ```Posts```, ```Users```, and ```Configs``` (to edit site configurations on the fly).
 
 Those three object types will have the following matafields (all of type *text*, given by their *Title*):
@@ -113,7 +113,7 @@ var truncate = require('truncate-html')
 var cors = require('cors')
 ```
 
-When we deploy our app, CosmicJS will provide our Bucket keys as well as any custom keys we provide via ```process.env```. Below the require statements, go ahead make those accessible throughout the app by storing them in ```app.locals``` 
+When we deploy our app, Cosmic JS will provide our Bucket keys as well as any custom keys we provide via ```process.env```. Below the require statements, go ahead make those accessible throughout the app by storing them in ```app.locals``` 
 
 ```javascript
 //app.js
@@ -683,7 +683,7 @@ module.exports = router
 
 **The Posts Route:**
 
-Posts will use ```async``` to string together a series of async functions: one using the CosmicJS client to get our Posts, the next using Cosmic to get the site config and render the ```posts``` view, passing in the relevant locals. If the user is not in an authenticated session, we'll use ```lodash``` to filter out the posts returned from Cosmic which *have not* been labelled premium (and are therefore free to read). We'll pass the Posts, Config, and route-specific view data via ```res.locals```.
+Posts will use ```async``` to string together a series of async functions: one using the Cosmic JS client to get our Posts, the next using Cosmic to get the site config and render the ```posts``` view, passing in the relevant locals. If the user is not in an authenticated session, we'll use ```lodash``` to filter out the posts returned from Cosmic which *have not* been labelled premium (and are therefore free to read). We'll pass the Posts, Config, and route-specific view data via ```res.locals```.
 
 ```javascript
 var express = require('express');
@@ -1043,7 +1043,7 @@ If you've done everything right up until this point, your blog now works exactly
 
 Stripe provides us with an impressive amount of analytics, however we want a central location to get a quick glance at a list of all of our users, what subscription plan they're on, and three key metrics about our blog: revenue to date, active subscriptions, and cancellations to date.
 
-CosmicJS gives us the ability to do this by utilizing it's extension feature, which lets us upload a SPA with ```index.html``` as an entry point that gets loaded into a frame in our Cosmic dashboard. Bucket keys are then provided to it via URL query strings.
+Cosmic JS gives us the ability to do this by utilizing it's extension feature, which lets us upload a SPA with ```index.html``` as an entry point that gets loaded into a frame in our Cosmic dashboard. Bucket keys are then provided to it via URL query strings.
 
 We'll be building the extension with React, namely because our extension only requires a view layer.
 
@@ -1533,9 +1533,9 @@ To tell Cosmic what your extension is, you'll need to add ```extension.json``` t
 
 # Conclusion
 
-Using CosmicJS, Express, Stripe, and React, we've built both a monetizable blog that lets our readers subscribe to read premium content and a convenient dashboard to view data about our blog. We've integrated Stripe for secure payments and we've built an app that does as much as we want it to do with room to grow.
+Using Cosmic JS, Express, Stripe, and React, we've built both a monetizable blog that lets our readers subscribe to read premium content and a convenient dashboard to view data about our blog. We've integrated Stripe for secure payments and we've built an app that does as much as we want it to do with room to grow.
 
-With how quickly we've been able to build our app and with the simplicity of deploying and maintaining it, it's clear that CosmicJS is one of a kind in its API first approach to content management. Clearly, CosmisJS is a money maker.
+With how quickly we've been able to build our app and with the simplicity of deploying and maintaining it, it's clear that Cosmic JS is one of a kind in its API first approach to content management. Clearly, CosmisJS is a money maker.
 
 ---
 
