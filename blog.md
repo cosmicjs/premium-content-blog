@@ -9,7 +9,7 @@ Our project will be a play in two parts. First, we'll build our blog with Expres
 
 # Part 1: Building the Blog
 
-###1. Boilerplate Setup
+### 1. Boilerplate Setup
 To save time on boilerplate, we'll use Yeoman and the Express Generator (which builds on Express' official generator) to get started. If you don't have Yeoman installed, run ```npm i -g yo```. Then install the generator with ```npm i -g generator-express``` and run it with ```yo express```. Follow the instructions to set up your project under a new directory (say ```CosmicUserBlog```), install the *Basic* version, and use Handlebars for your view engine.
 
 Your directory structure is now this:
@@ -37,7 +37,7 @@ CosmicUserBlog
 |--package.json
 ```
 
-###2. Installations
+### 2. Installations
 We'll be using the following packages:
 * Async - A powerful async utilities library
 * Axios - Simple, promise based http requests
@@ -51,17 +51,17 @@ We'll be using the following packages:
 
 You could install these with npm, but I advocate for Yarn. It's significantly faster and we have no time to waste. So install Yarn (on macOS we'll do a ```brew install yarn```) then run ```yarn add async axios cors bcrypt cosmicjs expres-session dateformat stripe truncate-html``` . We're almost ready to start building.
 
-###3. Set Up Cosmic JS
+### 3. Set Up Cosmic JS
 Before we start building, we'll need to work out the schema for our Cosmic Bucket. We want to store ```Posts```, ```Users```, and ```Configs``` (to edit site configurations on the fly).
 
 Those three object types will have the following matafields (all of type *text*, given by their *Title*):
 
-####Post:
+#### Post:
 | Metafield |                 Value |
 | --------- | --------------------: |
 | Premium   | **true** or **false** |
 
-####User:
+#### User:
 | Metafield        |         Value |
 | ---------------- | ------------: |
 | First name       |        string |
@@ -71,7 +71,7 @@ Those three object types will have the following matafields (all of type *text*,
 | Stripe Id        |        string |
 | Subsription Type |        string |
 
-####Config:
+#### Config:
 **Object: Subscriptions**:
 | Metafield       |  Value |
 | --------------- | -----: |
@@ -97,7 +97,7 @@ Since we'll be charging users for their premium subscriptions we'll need a payme
 
 ---
 
-###5. Configure the Express App
+### 5. Configure the Express App
 
  We have our packages installed, we worked out our data schema, and we've set up a a Stripe account. Now we need to configure our Express backend.
 
@@ -150,7 +150,7 @@ At this point we have a solid base to build our app on and can start drafting ou
 
 ---
 
-###6. Sculpt Out the Views
+### 6. Sculpt Out the Views
 
 Having a model of how we want our blog to look and feel will help us think about how to wire up it's routes. We'll start with the main layout.
 
